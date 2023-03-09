@@ -4,10 +4,10 @@ import Head from 'next/head'
 import { Navbar } from '../ui'
 
 interface Props {
-    title?: string
-    pageDescription: string
-    imageFullUrl?: string
-    children: ReactNode
+    title?          : string
+    pageDescription : string
+    imageFullUrl?   : string
+    children        : ReactNode
 }
 
 export const StoreLayout: FC<Props> = ({
