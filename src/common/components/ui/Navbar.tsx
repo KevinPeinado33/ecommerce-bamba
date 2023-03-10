@@ -20,17 +20,20 @@ import {
     ShoppingCartOutlined
 } from '@mui/icons-material'
 
+import { toggleCart } from '@/common/data/slices/ui.slice'
 import { toggleSideMenu } from '../../data/slices/ui.slice'
 
-const Navbar = () => {
+export const Navbar = () => {
 
     const { asPath, push } = useRouter()
-    const dispatch = useDispatch()
+    const dispatch         = useDispatch()
 
-    const [searchTerm, setSearchTerm] = useState('')
+    const [searchTerm, setSearchTerm]           = useState('')
     const [isSearchVisible, setIsSearchVisible] = useState(false)
 
-    const numberOfItems = 2
+    const numberOfItems = 20
+
+    const showCartProducts = () => dispatch( toggleCart() )
 
     const onSearchTerm = () => {
         if (searchTerm.trim().length === 0) return
@@ -124,26 +127,23 @@ const Navbar = () => {
                     <SearchOutlined />
                 </IconButton>
 
-                <NextLink href='/cart' passHref legacyBehavior >
-                    <Link>
-                        <IconButton>
-                            {
-                                numberOfItems >= 1
-                                    ? (
-                                        <Badge
-                                            className='fadeIn'
-                                            badgeContent={numberOfItems > 9 ? '+9' : numberOfItems}
-                                            color='secondary'
-                                        >
-                                            <ShoppingCartOutlined />
-                                        </Badge>
-                                    ) : (
-                                        <ShoppingCartOutlined />
-                                    )
-                            }
-                        </IconButton>
-                    </Link>
-                </NextLink>
+                <IconButton
+                    onClick={ showCartProducts }>
+                    {
+                        numberOfItems >= 1
+                            ? (
+                                <Badge
+                                    className='fadeIn'
+                                    badgeContent={numberOfItems > 9 ? '9+' : numberOfItems}
+                                    color='secondary'
+                                >
+                                    <ShoppingCartOutlined />
+                                </Badge>
+                            ) : (
+                                <ShoppingCartOutlined />
+                            )
+                    }
+                </IconButton>
 
                 <Button
                     onClick={() => dispatch(toggleSideMenu())}
@@ -156,4 +156,3 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
